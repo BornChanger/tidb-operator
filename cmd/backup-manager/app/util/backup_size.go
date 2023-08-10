@@ -251,6 +251,7 @@ func calculateSnapshotSize(volumeId, snapshotId string) (uint64, uint64, error) 
 		}
 
 		isRetry := func(err error) bool {
+			klog.V(4).Infof("calc snapshot size hit error %s", err.Error())
 			return !strings.Contains(err.Error(), "RequestThrottledException")
 		}
 		err = retry.OnError(backoff, isRetry, listBlocks)
@@ -332,6 +333,7 @@ func calculateChangedBlocksSize(volumeId, preSnapshotId, snapshotId string) (uin
 		}
 
 		isRetry := func(err error) bool {
+			klog.V(4).Infof("calc snapshot size hit error %s", err.Error())
 			return !strings.Contains(err.Error(), "RequestThrottledException")
 		}
 		err = retry.OnError(backoff, isRetry, listChangeBlocks)
